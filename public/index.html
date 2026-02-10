@@ -22,6 +22,12 @@
                         <span class="available" id="pilot-available">0</span>
                         <span class="assigned" id="pilot-assigned">0</span>
                     </div>
+                    <div class="stat-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="pilot-progress"></div>
+                        </div>
+                        <span class="progress-label">Availability Rate</span>
+                    </div>
                 </div>
                 <div class="stat-card">
                     <h3>Drones</h3>
@@ -30,6 +36,12 @@
                         <span class="available" id="drone-available">0</span>
                         <span class="deployed" id="drone-deployed">0</span>
                     </div>
+                    <div class="stat-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="drone-progress"></div>
+                        </div>
+                        <span class="progress-label">Utilization Rate</span>
+                    </div>
                 </div>
                 <div class="stat-card">
                     <h3>Assignments</h3>
@@ -37,6 +49,12 @@
                         <span class="total" id="assignment-total">0</span>
                         <span class="pending" id="assignment-pending">0</span>
                         <span class="confirmed" id="assignment-confirmed">0</span>
+                    </div>
+                    <div class="stat-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="assignment-progress"></div>
+                        </div>
+                        <span class="progress-label">Success Rate</span>
                     </div>
                 </div>
             </div>
@@ -74,6 +92,9 @@
 
                     <div class="section">
                         <h3>Recent Assignments</h3>
+                        <div class="search-box">
+                            <input type="text" id="assignment-search" placeholder="Search assignments...">
+                        </div>
                         <div class="assignments-list" id="assignments-list">
                             <p>No assignments yet</p>
                         </div>

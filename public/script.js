@@ -14,6 +14,23 @@ class DroneCoordinatorApp {
         this.clearHistoryButton = document.getElementById('clear-history');
         this.assignmentsList = document.getElementById('assignments-list');
         this.alertsList = document.getElementById('alerts-list');
+        this.assignmentSearch = document.getElementById('assignment-search');
+        
+        // Stats elements
+        this.pilotTotal = document.getElementById('pilot-total');
+        this.pilotAvailable = document.getElementById('pilot-available');
+        this.pilotAssigned = document.getElementById('pilot-assigned');
+        this.droneTotal = document.getElementById('drone-total');
+        this.droneAvailable = document.getElementById('drone-available');
+        this.droneDeployed = document.getElementById('drone-deployed');
+        this.assignmentTotal = document.getElementById('assignment-total');
+        this.assignmentPending = document.getElementById('assignment-pending');
+        this.assignmentConfirmed = document.getElementById('assignment-confirmed');
+        
+        // Progress bars
+        this.pilotProgress = document.getElementById('pilot-progress');
+        this.droneProgress = document.getElementById('drone-progress');
+        this.assignmentProgress = document.getElementById('assignment-progress');
     }
 
     attachEventListeners() {
@@ -32,6 +49,13 @@ class DroneCoordinatorApp {
                 }
             });
         });
+        
+        // Assignment search functionality
+        if (this.assignmentSearch) {
+            this.assignmentSearch.addEventListener('input', (e) => {
+                this.filterAssignments(e.target.value.toLowerCase());
+            });
+        }
     }
 
     // Load default assignments when no data is available
@@ -82,6 +106,19 @@ class DroneCoordinatorApp {
         this.updateAssignmentsList(defaultAssignments);
     }
 
+    filterAssignments(searchTerm) {
+        const assignmentItems = document.querySelectorAll('.assignment-item');
+        
+        assignmentItems.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
     async loadDashboardData() {
         try {
             const [pilots, drones, assignments, alerts] = await Promise.all([
@@ -92,6 +129,7 @@ class DroneCoordinatorApp {
             ]);
 
             this.updateStats(pilots, drones, assignments);
+            this.updateProgressBars(pilots, drones, assignments);
             
             // Only update assignments list if there are actual assignments from the API
             if (assignments && assignments.length > 0) {
@@ -104,6 +142,17 @@ class DroneCoordinatorApp {
             // Still show default assignments if API fails
             this.loadDefaultAssignments();
         }
+    }
+
+    updateProgressBars(pilots, drones, assignments) {
+        // Calculate and update progress bars
+        const pilotAvailRate = pilots.length > 0 ? (pilots.filter(p => p.status === 'Available').length / pilots.length) * 100 : 0;
+        const droneUtilRate = drones.length > 0 ? (drones.filter(d => d.status !== 'Available').length / drones.length) * 100 : 0;
+        const assignmentSuccessRate = assignments.length > 0 ? (assignments.filter(a => a.status === 'Confirmed').length / assignments.length) * 100 : 0;
+
+        if (this.pilotProgress) this.pilotProgress.style.width = `${Math.round(pilotAvailRate)}%`;
+        if (this.droneProgress) this.droneProgress.style.width = `${Math.round(droneUtilRate)}%`;
+        if (this.assignmentProgress) this.assignmentProgress.style.width = `${Math.round(assignmentSuccessRate)}%`;
     }
 
     async fetchData(endpoint) {
@@ -121,19 +170,19 @@ class DroneCoordinatorApp {
 
     updateStats(pilots, drones, assignments) {
         // Update pilot stats
-        document.getElementById('pilot-total').textContent = pilots.length;
-        document.getElementById('pilot-available').textContent = pilots.filter(p => p.status === 'Available').length;
-        document.getElementById('pilot-assigned').textContent = pilots.filter(p => p.status === 'Assigned').length;
+        if (this.pilotTotal) this.pilotTotal.textContent = pilots.length;
+        if (this.pilotAvailable) this.pilotAvailable.textContent = pilots.filter(p => p.status === 'Available').length;
+        if (this.pilotAssigned) this.pilotAssigned.textContent = pilots.filter(p => p.status === 'Assigned').length;
 
         // Update drone stats
-        document.getElementById('drone-total').textContent = drones.length;
-        document.getElementById('drone-available').textContent = drones.filter(d => d.status === 'Available').length;
-        document.getElementById('drone-deployed').textContent = drones.filter(d => d.status === 'Deployed').length;
+        if (this.droneTotal) this.droneTotal.textContent = drones.length;
+        if (this.droneAvailable) this.droneAvailable.textContent = drones.filter(d => d.status === 'Available').length;
+        if (this.droneDeployed) this.droneDeployed.textContent = drones.filter(d => d.status === 'Deployed').length;
 
         // Update assignment stats
-        document.getElementById('assignment-total').textContent = assignments.length;
-        document.getElementById('assignment-pending').textContent = assignments.filter(a => a.status === 'Pending').length;
-        document.getElementById('assignment-confirmed').textContent = assignments.filter(a => a.status === 'Confirmed').length;
+        if (this.assignmentTotal) this.assignmentTotal.textContent = assignments.length;
+        if (this.assignmentPending) this.assignmentPending.textContent = assignments.filter(a => a.status === 'Pending').length;
+        if (this.assignmentConfirmed) this.assignmentConfirmed.textContent = assignments.filter(a => a.status === 'Confirmed').length;
     }
 
     updateAssignmentsList(assignments) {
