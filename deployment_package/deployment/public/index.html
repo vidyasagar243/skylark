@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skylark Drone Coordinator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚁 Skylark Drone Operations Coordinator</h1>
+            <p>AI-Powered Fleet Management System</p>
+        </header>
+
+        <main class="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Pilots</h3>
+                    <div class="stat-numbers">
+                        <span class="total" id="pilot-total">0</span>
+                        <span class="available" id="pilot-available">0</span>
+                        <span class="assigned" id="pilot-assigned">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Drones</h3>
+                    <div class="stat-numbers">
+                        <span class="total" id="drone-total">0</span>
+                        <span class="available" id="drone-available">0</span>
+                        <span class="deployed" id="drone-deployed">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Assignments</h3>
+                    <div class="stat-numbers">
+                        <span class="total" id="assignment-total">0</span>
+                        <span class="pending" id="assignment-pending">0</span>
+                        <span class="confirmed" id="assignment-confirmed">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="chat-section">
+                    <div class="chat-header">
+                        <h2>AI Assistant</h2>
+                        <button id="clear-history" class="btn-secondary">Clear History</button>
+                    </div>
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message assistant">
+                            <div class="message-content">
+                                Hello! I'm your Drone Operations Coordinator AI. How can I help you today?
+                                You can ask me about pilot availability, drone assignments, or urgent reassignments.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="message-input" placeholder="Ask about pilots, drones, assignments...">
+                        <button id="send-message" class="btn-primary">Send</button>
+                    </div>
+                </div>
+
+                <div class="data-sections">
+                    <div class="section">
+                        <h3>Quick Actions</h3>
+                        <div class="quick-actions">
+                            <button class="btn-action" data-action="available-pilots">Available Pilots</button>
+                            <button class="btn-action" data-action="available-drones">Available Drones</button>
+                            <button class="btn-action" data-action="urgent-reassignment">Urgent Reassignment</button>
+                            <button class="btn-action" data-action="create-assignment">New Assignment</button>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Recent Assignments</h3>
+                        <div class="assignments-list" id="assignments-list">
+                            <p>No assignments yet</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Maintenance Alerts</h3>
+                        <div class="alerts-list" id="alerts-list">
+                            <p>No maintenance alerts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
